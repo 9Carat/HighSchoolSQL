@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace HighSchoolSQL
 {
@@ -8,6 +9,9 @@ namespace HighSchoolSQL
         static void Main(string[] args)
         {
             SqlConnection sqlcon = new SqlConnection(@"Data Source=DESKTOP-4SNMTAT; Initial Catalog=HighSchool; Integrated Security=true");
+
+            //EF
+            //Scaffold - DbContext "Server=DESKTOP-4SNMTAT;Database=HighSchool;Trusted_Connection=True;" Microsoft.EntityFrameworkCore.SqlServer - OutputDir Models
 
             string selection = "1";
 
