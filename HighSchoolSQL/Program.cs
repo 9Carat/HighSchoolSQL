@@ -1,4 +1,5 @@
 ﻿using HighSchoolSQL.Data;
+using HighSchoolSQL.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Data.SqlClient;
@@ -24,6 +25,7 @@ namespace HighSchoolSQL
                 Console.WriteLine("5. Show all grades in the latest month");
                 Console.WriteLine("6. Show a list of all courses together with the average, highest and lowest grade ");
                 Console.WriteLine("7. Display a list of all students");
+                Console.WriteLine("8. Display a list of all students in a selected class");
                 Console.WriteLine("0. Exit the program.");
                 selection = Console.ReadLine();
                 Console.Clear();
@@ -221,6 +223,43 @@ namespace HighSchoolSQL
                         Console.WriteLine("Press enter to continue");
                         Console.ReadLine();
                         Console.Clear();
+                        break;
+
+                    case "8":
+                        Console.WriteLine("Select one of the following classes.");
+                        Console.WriteLine("NA21A");
+                        Console.WriteLine("NA21B");
+                        string selection4 = Console.ReadLine().ToUpper();
+                        Console.Clear();
+
+                        using (var context = new HSContext())
+                        {
+                            var students = from c in context.Students
+                                           select c;
+                            var studentList = students.Where(i => i.Class == selection4);
+                            foreach (var student in studentList)
+                            {
+                                Console.WriteLine(student.FirstName + " " + student.LastName + " " + student.Class);
+                            }
+                        }
+                        Console.WriteLine("Press enter to continue");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+                    case "9":
+                        {
+                            //using HSContext context = new HSContext();
+                            //Student s1 = new Student();
+                            //s1.FirstName = "Christoffer";
+                            //s1.LastName = "Ottestig";
+                            //s1.PersonalNumber = "19950409-0797";
+                            //s1.Class = "NA21A";
+                            //context.Students.Add(s1);
+                            //context.SaveChanges();
+                            //Console.WriteLine("Database updated");
+                            //Console.ReadLine();
+                        }
+                        
                         break;
 
                     case "0":
