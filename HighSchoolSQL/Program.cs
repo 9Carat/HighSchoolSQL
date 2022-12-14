@@ -1,9 +1,12 @@
 ﻿using HighSchoolSQL.Data;
 using HighSchoolSQL.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Data.Common;
 using System.Data.SqlClient;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HighSchoolSQL
 {
@@ -26,6 +29,8 @@ namespace HighSchoolSQL
                 Console.WriteLine("6. Show a list of all courses together with the average, highest and lowest grade ");
                 Console.WriteLine("7. Display a list of all students");
                 Console.WriteLine("8. Display a list of all students in a selected class");
+                Console.WriteLine("9. Add students");
+                Console.WriteLine("10. Add staff members");
                 Console.WriteLine("0. Exit the program.");
                 selection = Console.ReadLine();
                 Console.Clear();
@@ -248,18 +253,49 @@ namespace HighSchoolSQL
                         break;
                     case "9":
                         {
-                            //using HSContext context = new HSContext();
-                            //Student s1 = new Student();
-                            //s1.FirstName = "Christoffer";
-                            //s1.LastName = "Ottestig";
-                            //s1.PersonalNumber = "19950409-0797";
-                            //s1.Class = "NA21A";
-                            //context.Students.Add(s1);
-                            //context.SaveChanges();
-                            //Console.WriteLine("Database updated");
-                            //Console.ReadLine();
+                            Console.WriteLine("Enter the student's first name:");
+                            string fName = Console.ReadLine();
+                            Console.WriteLine("Enter the student's last name:");
+                            string lName = Console.ReadLine();
+                            Console.WriteLine("Enter the student's personal number:");
+                            string personalNum = Console.ReadLine();
+                            Console.WriteLine("Enter the student's class:");
+                            string className = Console.ReadLine();
+
+                            using HSContext context = new HSContext();
+                            Student s1 = new Student();
+                            s1.FirstName = fName;
+                            s1.LastName = lName;
+                            s1.PersonalNumber = personalNum;
+                            s1.Class = className;
+                            context.Students.Add(s1);
+                            context.SaveChanges();
+                            Console.WriteLine("Database updated!");
+                            Console.ReadLine();
+                            Console.Clear();
                         }
+                        break;
                         
+                    case "10":
+                        {
+                            Console.WriteLine("Enter the staff member's first name:");
+                            string firstName = Console.ReadLine();
+                            Console.WriteLine("Enter the staff member's last name:");
+                            string lastName = Console.ReadLine();
+                            Console.WriteLine("Enter the staff member's role :");
+                            string role = Console.ReadLine();
+                            
+                            using HSContext context = new HSContext();
+                            staff s1 = new staff();
+                            s1.FirstName = firstName;
+                            s1.LastName = lastName;
+                            s1.StaffRole = role;
+                            context.staff.Add(s1);
+                            context.SaveChanges();
+                            Console.WriteLine("Database updated!");
+                            Console.ReadLine();
+                            Console.Clear();
+                        }
                         break;
 
                     case "0":
