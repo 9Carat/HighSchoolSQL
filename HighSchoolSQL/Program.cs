@@ -107,7 +107,8 @@ namespace HighSchoolSQL
                         break;
 
                     case "5":
-                        SqlDataAdapter sqlDat5 = new SqlDataAdapter("SELECT course_name, grade, first_name, last_name\r\nFROM Course\r\nJOIN\r\nStudent\r\nON Student.stud_id = Course.FK_stud_id\r\nWHERE grade_date > '2022-11-06'", sqlcon);
+
+                        SqlDataAdapter sqlDat5 = new SqlDataAdapter("select * from last_months_grades", sqlcon);
                         DataTable dtTable5 = new DataTable();
                         sqlDat5.Fill(dtTable5);
 
@@ -120,6 +121,8 @@ namespace HighSchoolSQL
                             Console.Write(dr["course_name"]);
                             Console.Write(" - ");
                             Console.Write(dr["grade"]);
+                            Console.Write(" - ");
+                            Console.Write(dr["grade_date"]);
                             Console.WriteLine();
                         }
                         Console.WriteLine("Press enter to continue");
@@ -128,9 +131,19 @@ namespace HighSchoolSQL
                         break;
 
                     case "6":
-                        SqlDataAdapter sqlDat6 = new SqlDataAdapter("SELECT course_name, AVG(grade) AS average_grade, MAX(grade) AS max_grade, MIN(grade) AS min_grade\r\nFROM Course\r\nGROUP BY course_name", sqlcon);
+
+                        SqlDataAdapter sqlDat6 = new SqlDataAdapter("select * from avg_min_max_grade", sqlcon);
                         DataTable dtTable6 = new DataTable();
                         sqlDat6.Fill(dtTable6);
+
+                        Console.Write("Course name");
+                        Console.Write(" - ");
+                        Console.Write("Average grade");
+                        Console.Write(" - ");
+                        Console.Write("Max grade");
+                        Console.Write(" - ");
+                        Console.Write("Min grade");
+                        Console.WriteLine();
 
                         foreach (DataRow dr in dtTable6.Rows)
                         {
@@ -149,14 +162,7 @@ namespace HighSchoolSQL
                         break;
 
                     case "7":
-                        //Console.WriteLine("Do you want to order the students by firstname or lastname?");
-                        //Console.WriteLine("1. Firstname");
-                        //Console.WriteLine("2. Lastname");
-                        //string input1 = Console.ReadLine();
-                        //string order(string input1) => input = "1" ? "first_name : last_name;"
-                        //Console.WriteLine("Do you want to sort the list in ascending or descending order?");
-                        //string sortOrder = Console.ReadLine();
-
+                       
                         Console.WriteLine("Do you want to order the students by firstname or lastname?");
                         Console.WriteLine("1. Firstname");
                         Console.WriteLine("2. Lastname");
