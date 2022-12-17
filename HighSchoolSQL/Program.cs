@@ -31,6 +31,7 @@ namespace HighSchoolSQL
                 Console.WriteLine("8. Display a list of all students in a selected class");
                 Console.WriteLine("9. Add students");
                 Console.WriteLine("10. Add staff members");
+                Console.WriteLine("11. Display all active courses");
                 Console.WriteLine("0. Exit the program.");
                 selection = Console.ReadLine();
                 Console.Clear();
@@ -246,7 +247,6 @@ namespace HighSchoolSQL
                         {
                             Console.WriteLine("Wrong input! Please try again.");
                         }
-
                         Console.WriteLine("Press enter to continue");
                         Console.ReadLine();
                         Console.Clear();
@@ -318,6 +318,23 @@ namespace HighSchoolSQL
                             Console.ReadLine();
                             Console.Clear();
                         }
+                        break;
+
+                    case "11":
+
+                        Console.WriteLine("Current active courses:");
+
+                        using (var context = new HSContext())
+                        {
+                            var courses = (from c in context.Courses
+                                          select c.CourseName).Distinct();
+                            foreach (var item in courses)
+                            {
+                                Console.WriteLine(item);
+                            }
+                        }
+                        Console.ReadLine();
+                        Console.Clear();
                         break;
 
                     case "0":
