@@ -183,7 +183,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderBy(i => i.FirstName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
@@ -196,7 +200,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderBy(i => i.LastName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
@@ -209,7 +217,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderByDescending(i => i.FirstName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
@@ -222,7 +234,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderByDescending(i => i.LastName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
