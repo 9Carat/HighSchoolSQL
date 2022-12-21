@@ -31,6 +31,8 @@ namespace HighSchoolSQL
                 Console.WriteLine("8. Display a list of all students in a selected class");
                 Console.WriteLine("9. Add students");
                 Console.WriteLine("10. Add staff members");
+                Console.WriteLine("11. Display all active courses");
+                Console.WriteLine("12. Update student information");
                 Console.WriteLine("0. Exit the program.");
                 selection = Console.ReadLine();
                 Console.Clear();
@@ -183,7 +185,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderBy(i => i.FirstName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
@@ -196,7 +202,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderBy(i => i.LastName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
@@ -209,7 +219,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderByDescending(i => i.FirstName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
@@ -222,7 +236,11 @@ namespace HighSchoolSQL
                                 var studentList = students.OrderByDescending(i => i.LastName);
                                 foreach (var student in studentList)
                                 {
-                                    Console.WriteLine(student.FirstName + " " + student.LastName);
+                                    Console.Write(student.FirstName + " ");
+                                    Console.Write(student.LastName + " - ");
+                                    Console.Write(student.PersonalNumber + " - ");
+                                    Console.Write(student.Class);
+                                    Console.WriteLine();
                                 }
                             }
                         }
@@ -230,7 +248,6 @@ namespace HighSchoolSQL
                         {
                             Console.WriteLine("Wrong input! Please try again.");
                         }
-
                         Console.WriteLine("Press enter to continue");
                         Console.ReadLine();
                         Console.Clear();
@@ -303,6 +320,85 @@ namespace HighSchoolSQL
                             Console.Clear();
                         }
                         break;
+
+                    case "11":
+
+                        Console.WriteLine("Current active courses:");
+
+                        using (var context = new HSContext())
+                        {
+                            var courses = (from c in context.Courses
+                                          select c.CourseName).Distinct();
+                            foreach (var item in courses)
+                            {
+                                Console.WriteLine(item);
+                            }
+                        }
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+
+                    case "12":
+
+                        using (var context = new HSContext())
+                        {
+                            Console.WriteLine("Please enter the student ID for the student you want to update:");
+                            int StudId = Int32.Parse(Console.ReadLine());
+                            Console.Clear();
+                            Console.WriteLine("Please enter what type of information you want to update:");
+                            Console.WriteLine("1. First name");
+                            Console.WriteLine("2. Last name");
+                            Console.WriteLine("3. Personal Number");
+                            Console.WriteLine("4. Class");
+                            string input = Console.ReadLine();
+                            Console.Clear();
+                            Console.WriteLine("Please enter the new information:");
+                            string info = Console.ReadLine();
+                            var Student = context.Students.SingleOrDefault(s => s.StudId == StudId);
+
+                            switch (input)
+                            {
+                                case "1":
+                                    
+                                    if (Student != null)
+                                    {
+                                        Student.FirstName = info;
+                                        context.SaveChanges();
+                                    }
+                                    break;
+
+                                case "2":
+                                    
+                                    if (Student != null)
+                                    {
+                                        Student.LastName = info;
+                                        context.SaveChanges();
+                                    }
+                                    break;
+
+                                case "3":
+
+                                    if (Student != null)
+                                    {
+                                        Student.PersonalNumber = info;
+                                        context.SaveChanges();
+                                    }
+                                    break;
+
+                                case "4":
+                                    
+                                    if (Student != null)
+                                    {
+                                        Student.Class = info;
+                                        context.SaveChanges();
+                                    }
+                                    break;
+                            }
+                            Console.WriteLine("Database updated!");
+                            Console.ReadLine();
+                            Console.Clear();
+                            break;
+                        }
 
                     case "0":
                         Environment.Exit(0);
