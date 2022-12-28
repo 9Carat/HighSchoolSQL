@@ -31,8 +31,9 @@ namespace HighSchoolSQL
                 Console.WriteLine("8. Display a list of all students in a selected class");
                 Console.WriteLine("9. Add students");
                 Console.WriteLine("10. Add staff members");
-                Console.WriteLine("11. Display all active courses");
-                Console.WriteLine("12. Update student information");
+                Console.WriteLine("11. Display teachers for a specific course");
+                Console.WriteLine("12. Display all active courses");
+                Console.WriteLine("13. Update student information");
                 Console.WriteLine("0. Exit the program.");
                 selection = Console.ReadLine();
                 Console.Clear();
@@ -323,6 +324,42 @@ namespace HighSchoolSQL
 
                     case "11":
 
+                        Console.WriteLine("The following courses exists:");
+                        Console.WriteLine("Mathematics");
+                        Console.WriteLine("Algebra");
+                        Console.WriteLine("Geography");
+                        Console.WriteLine("For which course do you wish to display the current teachers for?");
+                        string courseName = Console.ReadLine();
+                        Console.Clear();
+
+                        using (var context = new HSContext())
+                        {
+                            var staffMembers = (from staff in context.staff
+                                               join course in context.Courses
+                                               on staff.StaffId equals course.FkTeacherId
+                                               where course.CourseName == courseName
+                                               select new 
+                                               { 
+                                                   staff.FirstName, 
+                                                   staff.LastName, 
+                                                   course.CourseName 
+                                               }).Distinct();
+
+                            foreach (var item in staffMembers)
+                            {
+                                Console.WriteLine(item.FirstName);
+                                Console.WriteLine(item.LastName);
+                                Console.WriteLine(item.CourseName);
+                                Console.WriteLine(new string('-',30));
+                            }
+                        }
+                        Console.WriteLine("Press enter to continue");
+                        Console.ReadLine();
+                        Console.Clear();
+                        break;
+
+                    case "12":
+
                         Console.WriteLine("Current active courses:");
 
                         using (var context = new HSContext())
@@ -338,7 +375,7 @@ namespace HighSchoolSQL
                         Console.Clear();
                         break;
 
-                    case "12":
+                    case "13":
 
                         using (var context = new HSContext())
                         {
