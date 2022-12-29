@@ -14,7 +14,7 @@ namespace HighSchoolSQL
     {
         static void Main(string[] args)
         {
-            SqlConnection sqlcon = new SqlConnection(@"Data Source=DESKTOP-5I099SK; Initial Catalog=HighSchool; Integrated Security=true");
+            SqlConnection sqlcon = new SqlConnection(@"Data Source=LAPTOP-OTLQCEKC; Initial Catalog=HighSchool; Integrated Security=true");
 
             string selection = "1";
 
@@ -305,7 +305,7 @@ namespace HighSchoolSQL
                             string firstName = Console.ReadLine();
                             Console.WriteLine("Enter the staff member's last name:");
                             string lastName = Console.ReadLine();
-                            Console.WriteLine("Enter the staff member's role :");
+                            Console.WriteLine("Enter the staff member's role:");
                             string role = Console.ReadLine();
                             
                             using HSContext context = new HSContext();

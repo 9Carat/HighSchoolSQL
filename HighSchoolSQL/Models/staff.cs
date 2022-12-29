@@ -14,6 +14,8 @@ namespace HighSchoolSQL.Models
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string StaffRole { get; set; } = null!;
+        public DateTime? EmploymentStartDate { get; set; }
+        public int? Salary { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
     }

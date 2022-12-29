@@ -17,7 +17,10 @@ namespace HighSchoolSQL.Data
         {
         }
 
+        public virtual DbSet<AvgMinMaxGrade> AvgMinMaxGrades { get; set; } = null!;
         public virtual DbSet<Course> Courses { get; set; } = null!;
+        public virtual DbSet<CourseTeacher> CourseTeachers { get; set; } = null!;
+        public virtual DbSet<LastMonthsGrade> LastMonthsGrades { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<staff> staff { get; set; } = null!;
 
@@ -26,12 +29,30 @@ namespace HighSchoolSQL.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=DESKTOP-5I099SK; Initial Catalog=HighSchool; Integrated Security=true");
+                optionsBuilder.UseSqlServer("Data Source=LAPTOP-OTLQCEKC; Initial Catalog=HighSchool; Integrated Security=true");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AvgMinMaxGrade>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("avg_min_max_grade");
+
+                entity.Property(e => e.AverageGrade).HasColumnName("average_grade");
+
+                entity.Property(e => e.CourseName)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("course_name");
+
+                entity.Property(e => e.MaxGrade).HasColumnName("max_grade");
+
+                entity.Property(e => e.MinGrade).HasColumnName("min_grade");
+            });
+
             modelBuilder.Entity<Course>(entity =>
             {
                 entity.ToTable("Course");
@@ -64,6 +85,52 @@ namespace HighSchoolSQL.Data
                     .HasForeignKey(d => d.FkTeacherId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_teacher_id-REF-staff_id");
+            });
+
+            modelBuilder.Entity<CourseTeacher>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("CourseTeacher");
+
+                entity.Property(e => e.CourseName)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("course_name");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(20)
+                    .HasColumnName("first_name");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(20)
+                    .HasColumnName("last_name");
+            });
+
+            modelBuilder.Entity<LastMonthsGrade>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToView("last_months_grades");
+
+                entity.Property(e => e.CourseName)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("course_name");
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(20)
+                    .HasColumnName("first_name");
+
+                entity.Property(e => e.Grade).HasColumnName("grade");
+
+                entity.Property(e => e.GradeDate)
+                    .HasColumnType("date")
+                    .HasColumnName("grade_date");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(20)
+                    .HasColumnName("last_name");
             });
 
             modelBuilder.Entity<Student>(entity =>
@@ -99,6 +166,10 @@ namespace HighSchoolSQL.Data
 
                 entity.Property(e => e.StaffId).HasColumnName("staff_id");
 
+                entity.Property(e => e.EmploymentStartDate)
+                    .HasColumnType("date")
+                    .HasColumnName("employment_start_date");
+
                 entity.Property(e => e.FirstName)
                     .HasMaxLength(20)
                     .HasColumnName("first_name");
@@ -106,6 +177,8 @@ namespace HighSchoolSQL.Data
                 entity.Property(e => e.LastName)
                     .HasMaxLength(20)
                     .HasColumnName("last_name");
+
+                entity.Property(e => e.Salary).HasColumnName("salary");
 
                 entity.Property(e => e.StaffRole)
                     .HasMaxLength(20)
